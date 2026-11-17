@@ -91,7 +91,7 @@ function nav(home) {
   <div class="nav-links" id="nav-links">${NAV.map(([h, l]) => `<a href="${pre}${h}">${l}</a>`).join("")}</div>
   <div class="nav-actions">
     <button class="icon-btn theme-btn" type="button" aria-label="Switch to light theme">${icon("moon")}${icon("sun")}</button>
-    <a class="btn btn-primary btn-sm nav-resume" href="${site.resume}" download aria-label="Download resume">${icon("download")}<span>Resume</span></a>
+    <a class="btn btn-primary btn-sm nav-resume" href="${site.resume}" download="Suyog_Patil_Resume.pdf" aria-label="Download resume">${icon("download")}<span>Resume</span></a>
     <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">${icon("bars")}</button>
   </div>
 </nav></div></header>`;
@@ -164,7 +164,7 @@ ${nav(true)}
         <p class="lead rise d2">${md(hero.sub)}</p>
         <div class="btn-row rise d3">
           <a class="btn btn-primary" href="#projects">View Projects ${icon("arrow-right")}</a>
-          <a class="btn btn-ghost" href="${site.resume}" download>${icon("download")} Download Resume</a>
+          <a class="btn btn-ghost" href="${site.resume}" download="Suyog_Patil_Resume.pdf">${icon("download")} Download Resume</a>
         </div>
         <div class="hero-social rise d4">
           <a class="icon-btn" href="${site.linkedin}" target="_blank" rel="noopener" aria-label="LinkedIn">${icon("linkedin-in")}</a>
@@ -302,7 +302,7 @@ ${nav(true)}
         <a class="btn btn-primary" href="mailto:${site.email}">${icon("envelope")} Email me</a>
         <a class="btn btn-ghost" href="${site.linkedin}" target="_blank" rel="noopener">${icon("linkedin-in")} LinkedIn</a>
         <a class="btn btn-ghost" href="${site.github}" target="_blank" rel="noopener">${icon("github")} GitHub</a>
-        <a class="btn btn-ghost" href="${site.resume}" download>${icon("download")} Download Resume</a>
+        <a class="btn btn-ghost" href="${site.resume}" download="Suyog_Patil_Resume.pdf">${icon("download")} Download Resume</a>
       </div>
       <a class="contact-mail" href="mailto:${site.email}" style="position:relative">${icon("envelope")} ${esc(site.email)}</a>
     </div>
