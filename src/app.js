@@ -156,7 +156,8 @@
   if (lb) {
     const items = $$(".g-item"); let idx = 0;
     const img = $("img", lb), cap = $(".lb-cap", lb);
-    const show = (i) => { idx = (i + items.length) % items.length; const it = items[idx]; img.src = it.dataset.full; img.alt = it.dataset.alt; cap.textContent = `${idx + 1} / ${items.length} · ${it.dataset.cap}`; };
+    const box = $(".lb-img", lb);
+    const show = (i) => { idx = (i + items.length) % items.length; const it = items[idx]; img.src = it.dataset.full; img.alt = it.dataset.alt; lb.classList.toggle("tall", it.classList.contains("tall")); if (box) box.scrollTop = 0; cap.textContent = `${idx + 1} / ${items.length} · ${it.dataset.cap}`; };
     items.forEach((it, i) => {
       const open = () => { show(i); lb.showModal(); };
       it.querySelector(".g-frame").addEventListener("click", open);

@@ -36,6 +36,27 @@ const copyDir = (src, dst) => {
 const hash = (s) => crypto.createHash("sha1").update(s).digest("hex").slice(0, 10);
 const minCss = (s) => s.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\s+/g, " ").replace(/\s*([{}:;,>])\s*/g, "$1").replace(/;}/g, "}").trim();
 const media = (p, f) => `/projects/${p.slug}/${f}`;
+// Read image dimensions (GIF / WebP / SVG / PNG) without dependencies
+function imgSize(p, f) {
+  const file = path.join(ROOT, "static/projects", p.slug, f);
+  try {
+    if (f.endsWith(".svg")) {
+      const s = fs.readFileSync(file, "utf8"); const vb = s.match(/viewBox="[\d.\-]+ [\d.\-]+ ([\d.]+) ([\d.]+)"/);
+      if (vb) return [Math.round(+vb[1]), Math.round(+vb[2])];
+      const w = s.match(/width="([\d.]+)"/), h = s.match(/height="([\d.]+)"/); if (w && h) return [Math.round(+w[1]), Math.round(+h[1])];
+    }
+    const b = fs.readFileSync(file);
+    if (b.toString("ascii", 0, 3) === "GIF") return [b.readUInt16LE(6), b.readUInt16LE(8)];
+    if (b.toString("ascii", 1, 4) === "PNG") return [b.readUInt32BE(16), b.readUInt32BE(20)];
+    if (b.toString("ascii", 0, 4) === "RIFF") {
+      const k = b.toString("ascii", 12, 16);
+      if (k === "VP8X") return [1 + b.readUIntLE(24, 3), 1 + b.readUIntLE(27, 3)];
+      if (k === "VP8 ") return [b.readUInt16LE(26) & 0x3fff, b.readUInt16LE(28) & 0x3fff];
+      if (k === "VP8L") { const n = b.readUInt32LE(21); return [1 + (n & 0x3fff), 1 + ((n >> 14) & 0x3fff)]; }
+    }
+  } catch {}
+  return [1200, 700];
+}
 const poster = (p, f) => (f.endsWith(".gif") ? media(p, f.replace(/\.gif$/, "-poster.webp")) : media(p, f));
 
 // ---------- build assets ----------
@@ -412,9 +433,9 @@ ${nav(false)}
 
 <section class="pp-section" aria-labelledby="gal-h">
   <div class="container">
-    <div class="head reveal"><div class="label">Screenshots & diagrams</div><h2 id="gal-h">See it in <em>action.</em></h2><p>From the project repository. Click any image to enlarge.</p></div>
-    <div class="gallery">${p.media.map((m) => `<figure class="g-item reveal" data-full="${media(p, m.src)}" data-alt="${esc(m.alt)}" data-cap="${esc(m.cap)}">
-      <button class="g-frame" type="button" aria-label="Enlarge image: ${esc(m.cap)}"><img src="${media(p, m.src)}" alt="${esc(m.alt)}" loading="lazy" decoding="async" width="1200" height="700"><span class="g-zoom">${icon("magnifying-glass")}</span></button>
+    <div class="head reveal"><div class="label">Screenshots & diagrams</div><h2 id="gal-h">See it in <em>action.</em></h2><p>From the project repository. Tap any image to enlarge<span class="m-only">, swipe for more</span>.</p></div>
+    <div class="gallery">${p.media.map((m) => `<figure class="g-item reveal${(([w, h]) => (h > w * 0.9 ? " tall" : ""))(imgSize(p, m.src))}" data-full="${media(p, m.src)}" data-alt="${esc(m.alt)}" data-cap="${esc(m.cap)}">
+      <button class="g-frame" type="button" style="--ar:${imgSize(p, m.src).join(" / ")}" aria-label="Enlarge image: ${esc(m.cap)}"><img src="${media(p, m.src)}" alt="${esc(m.alt)}" loading="lazy" decoding="async" width="${imgSize(p, m.src)[0]}" height="${imgSize(p, m.src)[1]}"><span class="g-zoom">${icon("magnifying-glass")}</span></button>
       <figcaption>${esc(m.cap)}</figcaption>
     </figure>`).join("")}</div>
   </div>
@@ -440,7 +461,7 @@ ${nav(false)}
 </main>
 
 <dialog class="lightbox" aria-label="Image viewer">
-  <img src="data:," alt="">
+  <div class="lb-img"><img src="data:," alt=""></div>
   <div class="lb-bar"><span class="lb-cap"></span><div class="lb-nav">
     <button class="icon-btn lb-prev" type="button" aria-label="Previous image">${icon("arrow-left")}</button>
     <button class="icon-btn lb-next" type="button" aria-label="Next image">${icon("arrow-right")}</button>
