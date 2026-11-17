@@ -77,7 +77,6 @@ strong, b { color: var(--text); font-weight: 650; }
   display: inline-flex; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: .75rem;
   letter-spacing: .14em; text-transform: uppercase; color: var(--peach); margin-bottom: 18px;
 }
-.label::before { content: ""; width: 18px; height: 1px; background: currentColor; }
 .head { max-width: 760px; margin-bottom: 56px; }
 .head p { color: var(--muted); font-size: 1.1rem; max-width: 600px; }
 .head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
