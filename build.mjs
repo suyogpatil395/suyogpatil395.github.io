@@ -115,8 +115,10 @@ function nav(home) {
     <a class="btn btn-primary btn-sm nav-resume" href="${site.resume}" download="Suyog_Patil_Resume.pdf" aria-label="Download resume">${icon("download")}<span>Resume</span></a>
     <button class="icon-btn menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">${icon("bars")}</button>
   </div>
-</nav></div></header>`;
+</nav></div></header>
+<nav class="tabbar" aria-label="Quick navigation">${TABS.map(([h, ic, l]) => `<a class="tab${!home && h === "#projects" ? " active" : ""}" href="${home ? h : (h === "#top" ? "/" : "/" + h)}">${icon(ic)}<span>${l}</span></a>`).join("")}</nav>`;
 }
+const TABS = [["#top", "house", "Home"], ["#about", "user", "About"], ["#experience", "briefcase", "Experience"], ["#projects", "layer-group", "Projects"], ["#contact", "envelope", "Contact"]];
 
 const footer = () => `<footer class="footer"><div class="container footer-inner">
   <span>© <span data-year>${new Date().getFullYear()}</span> ${esc(site.name)}</span>
@@ -173,7 +175,7 @@ function home() {
 ${nav(true)}
 <main id="main">
 
-<section class="hero" aria-label="Intro">
+<section class="hero" id="top" aria-label="Intro">
   <div class="dot-grid"></div><div class="glow glow-peach"></div><div class="glow glow-violet"></div>
   <div class="container">
     <div class="hero-grid">

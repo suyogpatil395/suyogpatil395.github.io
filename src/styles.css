@@ -686,3 +686,25 @@ strong, b { color: var(--text); font-weight: 650; }
   .pn { padding: 18px 20px; }
   .flow-hint { display: none; }
 }
+
+/* ==========================================================
+   MOBILE: app-style bottom tab bar (same as suyogrow.in)
+   ========================================================== */
+.tabbar { display: none; }
+@media (max-width: 820px) {
+  .menu-btn, .nav-links { display: none !important; }
+  .tabbar {
+    display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; z-index: 95; left: 10px; right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom)); height: 62px; padding: 0 4px; border-radius: 22px;
+    background: color-mix(in srgb, var(--bg) 86%, transparent); border: 1px solid var(--line-2);
+    backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: 0 16px 40px -12px rgba(0,0,0,.6);
+  }
+  .tab { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    color: var(--dim); font-size: .66rem; font-weight: 500; letter-spacing: .01em; border-radius: 16px; transition: color .2s; }
+  .tab .i { font-size: 1.05rem; }
+  .tab.active { color: var(--text); }
+  .tab.active .i { color: var(--peach); }
+  .tab.active::before { content: ""; position: absolute; top: 5px; width: 22px; height: 3px; border-radius: 3px; background: var(--peach); }
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
+}

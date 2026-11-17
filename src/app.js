@@ -23,7 +23,7 @@
     menu.addEventListener("click", () => { const o = nav.classList.toggle("open"); menu.setAttribute("aria-expanded", o); });
     $$(".nav-links a").forEach((a) => a.addEventListener("click", () => { nav.classList.remove("open"); menu.setAttribute("aria-expanded", "false"); }));
   }
-  const links = $$('.nav-links a[href^="#"], .nav-links a[href^="/#"]');
+  const links = $$('.nav-links a[href^="#"], .nav-links a[href^="/#"], .tabbar a[href^="#"]');
   const secs = links.map((a) => $(a.getAttribute("href").replace("/", ""))).filter(Boolean);
   if (secs.length && "IntersectionObserver" in window) {
     const io = new IntersectionObserver((es) => es.forEach((e) => {
