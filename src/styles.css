@@ -145,7 +145,7 @@ strong, b { color: var(--text); font-weight: 650; }
 @media (max-width: 480px) { .nav-resume span { display: none; } .nav-resume { width: 44px; padding: 0; } .brand-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; } }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; padding: 156px 0 72px; overflow: hidden; }
+.hero { position: relative; padding: 156px 0 72px; overflow: visible; }
 .hero .glow-peach { width: 640px; height: 640px; top: -160px; right: -140px; }
 .hero .glow-violet { width: 520px; height: 520px; bottom: -220px; left: -220px; }
 .hero-grid { position: relative; display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; align-items: center; }
@@ -414,7 +414,7 @@ strong, b { color: var(--text); font-weight: 650; }
 /* ==========================================================
    PROJECT PAGE
    ========================================================== */
-.pp-hero { position: relative; padding: 140px 0 40px; overflow: hidden; }
+.pp-hero { position: relative; padding: 140px 0 40px; overflow: visible; }
 .pp-hero .glow-peach { width: 600px; height: 600px; top: -200px; right: -160px; background: radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity: .35; }
 .back { display: inline-flex; align-items: center; gap: 8px; font: 500 .85rem var(--f-mono); color: var(--muted); margin-bottom: 28px; padding: 7px 14px 7px 10px; border-radius: 999px; border: 1px solid var(--line); transition: all .25s; }
 .back:hover { color: var(--text); border-color: var(--line-2); }
