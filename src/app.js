@@ -75,8 +75,10 @@
     const count = $(".lib-count");
     $$(".chip-btn[data-filter]").forEach((b) => b.addEventListener("click", () => {
       $$(".chip-btn[data-filter]").forEach((x) => { x.classList.toggle("active", x === b); x.setAttribute("aria-pressed", x === b); });
-      const f = b.dataset.filter; let n = 0;
-      const apply = () => $$(".proj", grid).forEach((p) => { const show = f === "all" || p.dataset.filter === f; p.classList.toggle("is-hidden", !show); if (show) n++; });
+      const f = b.dataset.filter;
+      const match = (p) => f === "all" || p.dataset.filter === f;
+      const n = $$(".proj", grid).filter(match).length;
+      const apply = () => $$(".proj", grid).forEach((p) => p.classList.toggle("is-hidden", !match(p)));
       document.startViewTransition && !reduce ? document.startViewTransition(apply) : apply();
       if (count) count.textContent = `${n} project${n === 1 ? "" : "s"}`;
     }));
